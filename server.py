@@ -133,7 +133,13 @@ def call_tool(tool_name: str, latitude: float = None, longitude: float = None,
     if tool_name not in tools:
         raise HTTPException(status_code=404, detail="Tool not found")
     return tools[tool_name]()
+@app.get("/")
+def root():
+    return {"message": "Near-Me MCP Server is running"}
 
 if __name__ == "__main__":
-    print("🚀 Starting Near-Me MCP Server on port 3000...")
-    uvicorn.run(app, host="0.0.0.0", port=3000)
+    import os
+    port = int(os.getenv("PORT", 3000))
+    print(f"🚀 Starting Near-Me MCP Server on port {port}...")
+    uvicorn.run(app, host="0.0.0.0", port=port)
+
