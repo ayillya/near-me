@@ -133,12 +133,10 @@ def call_tool(tool_name: str, latitude: float = None, longitude: float = None,
     if tool_name not in tools:
         raise HTTPException(status_code=404, detail="Tool not found")
     return tools[tool_name]()
-@app.get("/debug")
-def debug():
-    return {
-        "tools": mcp.list_tools(),
-        "routes": [route.path for route in app.routes]
-    }
+@app.get("/debug/routes")
+def debug_routes():
+    return [route.path for route in app.routes]
+
 
 @app.get("/")
 def root():
